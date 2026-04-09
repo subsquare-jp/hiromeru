@@ -1,0 +1,74 @@
+﻿笆ｲ Next.js 16.2.1 (Turbopack)
+
+  Creating an optimized production build ...
+npx : 
+発生場所 行:1 文字:1
++ npx next build > build-log.txt 2>&
+1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~
+    + CategoryInfo          : NotSpe
+ci    fied: (:String) [], RemoteExce
+ptio    n
+    + FullyQualifiedErrorId : Native
+Co    mmandError
+ 
+> Build error occurred
+Error: Turbopack build failed with 1
+ errors:
+./app/globals.css
+Error evaluating Node.js code
+Error: It looks like you're trying t
+o use `tailwindcss` directly as a Po
+stCSS plugin. The PostCSS plugin has
+ moved to a separate package, so to 
+continue using Tailwind CSS with Pos
+tCSS you'll need to install `@tailwi
+ndcss/postcss` and update your PostC
+SS configuration.
+    [at at (C:\繧ｦ繧ｧ繝悶し繝ｼ繝薙せ髢狗匱\subsq
+uare-next\node_modules\tailwindcss\d
+ist\lib.js:38:1643)]
+    at pluginFactory (turbopack:///[
+turbopack-node]/transforms/postcss.t
+s:56:14) [C:\繧ｦ繧ｧ繝悶し繝ｼ繝薙せ髢狗匱\subsqua
+re-next\.next\build\chunks\[root-of-
+the-server]__0d-m0h0._.js:140:20]
+    [at <anonymous>]
+    at map (turbopack:///[turbopack-
+node]/transforms/postcss.ts:43:33) [
+C:\繧ｦ繧ｧ繝悶し繝ｼ繝薙せ髢狗匱\subsquare-next\.n
+ext\build\chunks\[root-of-the-server
+]__0d-m0h0._.js:130:35]
+    at init (turbopack:///[turbopack
+-node]/child_process/evaluate.ts:74:
+20) [C:\繧ｦ繧ｧ繝悶し繝ｼ繝薙せ髢狗匱\subsquare-ne
+xt\.next\build\chunks\[root-of-the-s
+erver]__0ubbtyl._.js:429:26]
+    [at process.processTicksAndRejec
+tions (node:internal/process/task_qu
+eues:95:5)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client Compon
+ent Browser]
+    ./app/layout.tsx [Server Compone
+nt]
+
+
+    at pluginFactory (turbopack:///[
+turbopack-node]/transforms/postcss.t
+s:56:14) [C:\繧ｦ繧ｧ繝悶し繝ｼ繝薙せ髢狗匱\subsqua
+re-next\.next\build\chunks\[root-of-
+the-server]__0d-m0h0._.js:140:20])
+    at map (turbopack:///[turbopack-
+node]/transforms/postcss.ts:43:33) [
+C:\繧ｦ繧ｧ繝悶し繝ｼ繝薙せ髢狗匱\subsquare-next\.n
+ext\build\chunks\[root-of-the-server
+]__0d-m0h0._.js:130:35])
+    at init (turbopack:///[turbopack
+-node]/child_process/evaluate.ts:74:
+20) [C:\繧ｦ繧ｧ繝悶し繝ｼ繝薙せ髢狗匱\subsquare-ne
+xt\.next\build\chunks\[root-of-the-s
+erver]__0ubbtyl._.js:429:26])
