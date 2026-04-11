@@ -36,10 +36,13 @@ export default function AdMvpMockPage() {
             id: doc.id,
             title: data.title ?? "",
             description: data.description ?? "",
-            imageUrl: data.imageUrl ?? null,
+            imageUrl: data.imageUrl ?? "",
             externalUrl: data.externalUrl ?? "",
             tags: Array.isArray(data.tags) ? data.tags : [],
+            adType: data.adType ?? "self",
+            status: data.status ?? "published",
             createdAt: data.createdAt,
+            updatedAt: data.updatedAt || data.createdAt,
           };
         });
 
