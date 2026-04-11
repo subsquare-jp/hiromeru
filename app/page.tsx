@@ -72,6 +72,12 @@ export default function AdMvpMockPage() {
     <div className="min-h-screen bg-neutral-100">
       <main className="mx-auto max-w-xl p-4">
         <h1 className="mb-4 text-xl font-bold">広告一覧</h1>
+        <a
+          href="/post"
+          className="mb-4 inline-block rounded-lg bg-black px-4 py-2 text-sm font-bold text-white"
+        >
+          広告を投稿する
+        </a>
 
         {loading && (
           <p className="text-sm text-neutral-500">読み込み中...</p>
