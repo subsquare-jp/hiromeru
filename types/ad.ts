@@ -7,6 +7,8 @@ export interface Ad {
   description?: string;   // 任意
   imageUrl?: string;      // 任意
   tags?: string[];        // 任意
+  testMode?: boolean;      // テスト投稿フラグ
+  source?: string;         // 投稿ソース識別
   // 固定パラメータ
   adType: 'self';         // 固定: "self"
   status: 'published';    // 固定: "published"
