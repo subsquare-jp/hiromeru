@@ -2,13 +2,40 @@
 
 import React from "react";
 import {
+  addDoc,
   collection,
+  FieldValue,
   getDocs,
   orderBy,
   query,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { Ad } from "@/types/ad";
+
+type ClickLog = {
+  adId: string;
+  adTitle: string;
+  externalUrl: string;
+  source: "modal";
+  createdAt: FieldValue;
+};
+
+async function saveClickLog(ad: Ad) {
+  const payload: ClickLog = {
+    adId: ad.id ?? "",
+    adTitle: ad.title,
+    externalUrl: ad.externalUrl,
+    source: "modal",
+    createdAt: serverTimestamp(),
+  };
+
+  try {
+    await addDoc(collection(db, "clicks"), payload);
+  } catch (error) {
+    console.error("クリックログ保存エラー:", error);
+  }
+}
 
 export default function AdMvpMockPage() {
   const [ads, setAds] = React.useState<Ad[]>([]);
@@ -252,6 +279,9 @@ function AdDetailModal({
                 href={ad.externalUrl}
                 target="_blank"
                 rel="noreferrer noopener"
+                onClick={() => {
+                  void saveClickLog(ad);
+                }}
                 className="block w-full rounded-xl bg-neutral-950 px-4 py-4 text-center text-sm font-bold text-white"
               >
                 外部リンクを見る
