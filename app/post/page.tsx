@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { db } from '@/lib/firebase'; // firebase初期化ファイルのパスを確認してください
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp, doc, getDoc, setDoc } from 'firebase/firestore';
 import { Ad } from '@/types/ad';
 import { useAuth } from '../AuthProvider';
 import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
@@ -21,6 +21,11 @@ export default function PostPage() {
         imageUrl: '',
         tags: '',
     });
+
+    const [isApproved, setIsApproved] = useState<boolean | null>(null);
+    const [keyPassInput, setKeyPassInput] = useState('');
+    const [keyPassError, setKeyPassError] = useState<string | null>(null);
+    const [submittingKeyPass, setSubmittingKeyPass] = useState(false);
 
     const formatError = (error: unknown) => {
         if (error && typeof error === 'object' && 'code' in error && 'message' in error) {
@@ -49,6 +54,62 @@ export default function PostPage() {
             const message = formatError(error);
             console.error('[PostPage] Sign in error:', message, error);
             setSignInError(`Googleログインに失敗しました: ${message}`);
+        }
+    };
+
+    useEffect(() => {
+        const checkApproval = async () => {
+            if (!user) {
+                setIsApproved(null);
+                return;
+            }
+            try {
+                const docRef = doc(db, 'creatorAccess', user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists() && docSnap.data().approved === true) {
+                    setIsApproved(true);
+                } else {
+                    setIsApproved(false);
+                }
+            } catch (err) {
+                console.error('Error checking approval:', err);
+                setIsApproved(false);
+            }
+        };
+        checkApproval();
+    }, [user]);
+
+    const handleKeyPassSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setKeyPassError(null);
+        const correctKey = process.env.NEXT_PUBLIC_CREATOR_KEYPASS;
+        
+        if (!correctKey) {
+            setKeyPassError('システムエラー: キーパスが環境変数に設定されていません。');
+            return;
+        }
+
+        if (keyPassInput === correctKey) {
+            if (!user) return;
+            setSubmittingKeyPass(true);
+            try {
+                const docRef = doc(db, 'creatorAccess', user.uid);
+                await setDoc(docRef, {
+                    uid: user.uid,
+                    email: user.email || '',
+                    displayName: user.displayName || '',
+                    approved: true,
+                    approvedAt: serverTimestamp(),
+                    approvedBy: "common_key"
+                });
+                setIsApproved(true);
+            } catch (err) {
+                setKeyPassError(`承認情報の保存に失敗しました: ${formatError(err)}`);
+            } finally {
+                setSubmittingKeyPass(false);
+            }
+        } else {
+            setKeyPassError('キーパスが正しくありません。');
         }
     };
 
@@ -131,6 +192,47 @@ export default function PostPage() {
                 </button>
             </main>
         );
+    }
+
+    if (isApproved === false) {
+        return (
+            <main className="max-w-2xl mx-auto p-8">
+                <h1 className="text-3xl font-bold mb-4">キーパスの入力</h1>
+                <div className="mb-8 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
+                    <p className="mb-2 font-bold">投稿権限の確認</p>
+                    <p>投稿するには運営から共有されたキーパスが必要です。</p>
+                </div>
+                {keyPassError && (
+                  <div className="mb-6 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {keyPassError}
+                  </div>
+                )}
+                <form onSubmit={handleKeyPassSubmit} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-semibold mb-2">キーパス (必須)</label>
+                        <input
+                            type="password"
+                            placeholder="共有されたキーパスを入力"
+                            className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                            value={keyPassInput}
+                            onChange={(e) => setKeyPassInput(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        disabled={submittingKeyPass}
+                        className="w-full py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-bold transition-colors disabled:bg-gray-600"
+                    >
+                        {submittingKeyPass ? '確認中...' : 'キーパスを確認する'}
+                    </button>
+                </form>
+            </main>
+        );
+    }
+
+    if (isApproved === null) {
+        return <div className="max-w-2xl mx-auto p-8">権限を確認中...</div>;
     }
 
     return (
