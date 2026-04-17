@@ -28,12 +28,9 @@ const AuthButtons = () => {
     setAuthError(null);
 
     try {
-      console.log('[AuthButtons] Calling signInWithRedirect...');
       await signInWithRedirect(auth, provider);
-      console.log('[AuthButtons] signInWithRedirect completed (should redirect now)');
     } catch (error) {
       const message = formatError(error);
-      console.error('[AuthButtons] Sign in error:', message, error);
       setAuthError(`Googleログインに失敗しました: ${message}`);
     }
   };

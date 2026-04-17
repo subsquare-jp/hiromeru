@@ -19,26 +19,18 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [initComplete, setInitComplete] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    // 1. Redirect 結果の処理 (エラーハンドリングのみ)
+    getRedirectResult(auth).catch((error) => {
+      console.error('Auth Redirect Error:', error);
     });
 
-    // Check redirect result to catch errors and unblock loading
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result && result.user) {
-          setUser(result.user);
-        }
-      })
-      .catch((error) => {
-        console.error('Redirect result error:', error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // 2. 状態監視
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false); // ここで必ず解除する
+    });
 
     return () => unsubscribe();
   }, []);
