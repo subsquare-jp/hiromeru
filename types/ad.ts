@@ -9,6 +9,9 @@ export interface Ad {
   tags?: string[];        // 任意
   testMode?: boolean;      // テスト投稿フラグ
   source?: string;         // 投稿ソース識別
+  ownerUid?: string;       // 投稿者UID
+  ownerEmail?: string;     // 投稿者メール
+  ownerDisplayName?: string; // 投稿者表示名
   // 固定パラメータ
   adType: 'self';         // 固定: "self"
   status: 'published';    // 固定: "published"

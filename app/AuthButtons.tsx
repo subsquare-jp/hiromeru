@@ -1,0 +1,82 @@
+'use client';
+
+import { useState } from 'react';
+import { signInWithRedirect, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { useAuth } from './AuthProvider';
+
+const AuthButtons = () => {
+  const { user, loading } = useAuth();
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  const formatError = (error: unknown) => {
+    if (error && typeof error === 'object' && 'code' in error && 'message' in error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e = error as any;
+      return `${e.code}: ${e.message}`;
+    }
+    if (error instanceof Error) {
+      return error.message;
+    }
+    return '不明なエラーが発生しました。';
+  };
+
+  const handleSignIn = async () => {
+    console.log('[AuthButtons] handleSignIn called');
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    setAuthError(null);
+
+    try {
+      console.log('[AuthButtons] Calling signInWithRedirect...');
+      await signInWithRedirect(auth, provider);
+      console.log('[AuthButtons] signInWithRedirect completed (should redirect now)');
+    } catch (error) {
+      const message = formatError(error);
+      console.error('[AuthButtons] Sign in error:', message, error);
+      setAuthError(`Googleログインに失敗しました: ${message}`);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
+
+  if (loading) return null;
+
+  return (
+    <div className="fixed top-4 right-4 z-50 text-right space-y-2">
+      {user ? (
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-700">{user.displayName}</span>
+          <button
+            onClick={handleSignOut}
+            className="rounded-lg bg-red-500 px-3 py-1 text-sm font-bold text-white hover:bg-red-600"
+          >
+            ログアウト
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <button
+            onClick={handleSignIn}
+            className="rounded-lg bg-blue-500 px-3 py-1 text-sm font-bold text-white hover:bg-blue-600"
+          >
+            Googleログイン
+          </button>
+          {authError && (
+            <div className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+              {authError}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AuthButtons;
