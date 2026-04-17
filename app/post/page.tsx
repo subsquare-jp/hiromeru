@@ -22,6 +22,7 @@ export default function PostPage() {
         tags: '',
     });
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     const [isApproved, setIsApproved] = useState<boolean | null>(null);
     const [keyPassInput, setKeyPassInput] = useState('');
@@ -57,6 +58,15 @@ export default function PostPage() {
             setSignInError(`Googleログインに失敗しました: ${message}`);
         }
     };
+
+    useEffect(() => {
+        // Cleanup function for object URL to avoid memory leaks
+        return () => {
+            if (imagePreview) {
+                URL.revokeObjectURL(imagePreview);
+            }
+        };
+    }, [imagePreview]);
 
     useEffect(() => {
         const checkApproval = async () => {
@@ -136,17 +146,17 @@ export default function PostPage() {
             if (imageFile) {
                 // ファイルサイズチェック (3MB)
                 if (imageFile.size > 3 * 1024 * 1024) {
-                    throw new Error('画像サイズは3MB以下にしてください。');
+                    throw new Error('画像は3MB以下にしてください。');
                 }
                 // 形式チェック
-                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
                 if (!allowedTypes.includes(imageFile.type)) {
-                    throw new Error('対応している画像形式は jpg, jpeg, png のみです。');
+                    throw new Error('対応していない画像形式です。jpg, jpeg, png, webp が利用可能です。');
                 }
 
                 const timestamp = Date.now();
                 const safeFileName = imageFile.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase();
-                const storagePath = `ads/${user.uid}/${timestamp}-${safeFileName}`;
+                const storagePath = `images/${user.uid}/${timestamp}-${safeFileName}`;
                 const storageRef = ref(storage, storagePath);
                 
                 const uploadResult = await uploadBytes(storageRef, imageFile);
@@ -177,8 +187,8 @@ export default function PostPage() {
             setSuccessMessage('テスト投稿ありがとうございます。正常に送信されました。');
             setFormData({ title: '', externalUrl: '', description: '', tags: '' });
             setImageFile(null);
-            // file input をリセットするために、もし必要なら ref を使うか key を変えるなどの工夫が必要
-            // 今回は簡易的にそのまま
+            setImagePreview(null);
+            // file input をリセットするために key を管理する方法もあるが、今回は簡易的にそのまま
         } catch (error) {
             const message = formatError(error);
             console.error('Submit Error:', message, error);
@@ -315,17 +325,42 @@ export default function PostPage() {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold mb-2">画像 (任意)</label>
+                    <label className="block text-sm font-semibold mb-2">画像（任意・3MBまで）</label>
                     <input
                         type="file"
-                        accept="image/png, image/jpeg, image/jpg"
+                        accept="image/png, image/jpeg, image/jpg, image/webp"
                         onChange={(e) => {
                             const file = e.target.files?.[0] || null;
                             setImageFile(file);
+                            if (file) {
+                                const url = URL.createObjectURL(file);
+                                setImagePreview(url);
+                            } else {
+                                setImagePreview(null);
+                            }
                         }}
                         className="w-full p-3 bg-gray-800 border border-gray-700 rounded text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500"
                     />
-                    <p className="mt-1 text-xs text-gray-400">3MB以下 / jpg, jpeg, png のみ</p>
+                    {imagePreview && (
+                        <div className="mt-3 relative w-full max-w-xs aspect-video bg-neutral-900 rounded-lg overflow-hidden border border-neutral-700">
+                            <img
+                                src={imagePreview}
+                                alt="プレビュー"
+                                className="w-full h-full object-contain"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setImageFile(null);
+                                    setImagePreview(null);
+                                }}
+                                className="absolute top-1 right-1 bg-black/50 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                            >
+                                ×
+                            </button>
+                        </div>
+                    )}
+                    <p className="mt-1 text-xs text-gray-400">JPEG / PNG / WebP</p>
                 </div>
                 <div>
                     <label className="block text-sm font-semibold mb-2">説明文 (任意)</label>
