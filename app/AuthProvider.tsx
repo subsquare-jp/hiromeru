@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, onAuthStateChanged, getRedirectResult } from 'firebase/auth';
+import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
 interface AuthContextType {
@@ -21,12 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Redirect 結果の処理 (エラーハンドリングのみ)
-    getRedirectResult(auth).catch((error) => {
-      console.error('Auth Redirect Error:', error);
-    });
-
-    // 2. 状態監視
+    // 状態監視
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false); // ここで必ず解除する

@@ -5,8 +5,9 @@ import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp, doc, getDoc, setDoc } from 'firebase/firestore';
 import { Ad } from '@/types/ad';
 import { useAuth } from '../AuthProvider';
-import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth, storage } from '@/lib/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function PostPage() {
     const { user, loading } = useAuth();
@@ -18,9 +19,9 @@ export default function PostPage() {
         title: '',
         externalUrl: '',
         description: '',
-        imageUrl: '',
         tags: '',
     });
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const [isApproved, setIsApproved] = useState<boolean | null>(null);
     const [keyPassInput, setKeyPassInput] = useState('');
@@ -47,9 +48,9 @@ export default function PostPage() {
         setErrorMessage(null);
 
         try {
-            console.log('[PostPage] Calling signInWithRedirect...');
-            await signInWithRedirect(auth, provider);
-            console.log('[PostPage] signInWithRedirect completed (should redirect now)');
+            console.log('[PostPage] Calling signInWithPopup...');
+            await signInWithPopup(auth, provider);
+            console.log('[PostPage] signInWithPopup completed');
         } catch (error) {
             const message = formatError(error);
             console.error('[PostPage] Sign in error:', message, error);
@@ -117,6 +118,7 @@ export default function PostPage() {
         e.preventDefault();
         setSuccessMessage(null);
         setErrorMessage(null);
+
         if (!formData.title || !formData.externalUrl) {
             setErrorMessage('タイトルとリンクURLは必須です。');
             return;
@@ -128,12 +130,37 @@ export default function PostPage() {
 
         setLoadingSubmit(true);
         try {
+            let uploadedImageUrl = '';
+            
+            // 1. 画像があれば Storage にアップロード
+            if (imageFile) {
+                // ファイルサイズチェック (3MB)
+                if (imageFile.size > 3 * 1024 * 1024) {
+                    throw new Error('画像サイズは3MB以下にしてください。');
+                }
+                // 形式チェック
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (!allowedTypes.includes(imageFile.type)) {
+                    throw new Error('対応している画像形式は jpg, jpeg, png のみです。');
+                }
+
+                const timestamp = Date.now();
+                const safeFileName = imageFile.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase();
+                const storagePath = `ads/${user.uid}/${timestamp}-${safeFileName}`;
+                const storageRef = ref(storage, storagePath);
+                
+                const uploadResult = await uploadBytes(storageRef, imageFile);
+                uploadedImageUrl = await getDownloadURL(uploadResult.ref);
+            }
+
+            // 2. Firestore `ads` に保存
             const adsCollection = collection(db, 'ads');
             const newAd: Ad = {
                 title: formData.title,
                 externalUrl: formData.externalUrl,
                 description: formData.description || '',
-                imageUrl: formData.imageUrl.trim() || '',
+                imageUrl: uploadedImageUrl,
+                hasImage: !!imageFile,
                 tags: formData.tags ? formData.tags.split(',').map(tag => tag.trim()) : [],
                 adType: 'self',
                 status: 'published',
@@ -148,10 +175,13 @@ export default function PostPage() {
 
             await addDoc(adsCollection, newAd);
             setSuccessMessage('テスト投稿ありがとうございます。正常に送信されました。');
-            setFormData({ title: '', externalUrl: '', description: '', imageUrl: '', tags: '' });
+            setFormData({ title: '', externalUrl: '', description: '', tags: '' });
+            setImageFile(null);
+            // file input をリセットするために、もし必要なら ref を使うか key を変えるなどの工夫が必要
+            // 今回は簡易的にそのまま
         } catch (error) {
             const message = formatError(error);
-            console.error('Firestore Error:', message, error);
+            console.error('Submit Error:', message, error);
             setErrorMessage(`投稿に失敗しました: ${message}`);
         } finally {
             setLoadingSubmit(false);
@@ -248,7 +278,7 @@ export default function PostPage() {
             <div className="mb-8 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
               <p className="mb-2 font-bold">画像なしのテスト投稿も歓迎しています</p>
               <ul className="list-disc space-y-1 pl-5">
-                <li>imageUrl は空欄でも送信できます。</li>
+                <li>画像なしでも送信できます。</li>
                 <li>今はテスト投稿を歓迎しています。</li>
                 <li>数十秒〜1分で投稿できます。</li>
               </ul>
@@ -285,14 +315,17 @@ export default function PostPage() {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-semibold mb-2">画像 URL (任意)</label>
+                    <label className="block text-sm font-semibold mb-2">画像 (任意)</label>
                     <input
-                        type="url"
-                        placeholder="例: https://... （空欄でOK）"
-                        className="w-full p-3 bg-gray-800 border border-gray-700 rounded text-white"
-                        value={formData.imageUrl}
-                        onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0] || null;
+                            setImageFile(file);
+                        }}
+                        className="w-full p-3 bg-gray-800 border border-gray-700 rounded text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500"
                     />
+                    <p className="mt-1 text-xs text-gray-400">3MB以下 / jpg, jpeg, png のみ</p>
                 </div>
                 <div>
                     <label className="block text-sm font-semibold mb-2">説明文 (任意)</label>

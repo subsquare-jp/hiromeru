@@ -6,6 +6,7 @@ export interface Ad {
   externalUrl: string;    // 必須
   description?: string;   // 任意
   imageUrl?: string;      // 任意
+  hasImage: boolean;      // 画像の有無
   tags?: string[];        // 任意
   testMode?: boolean;      // テスト投稿フラグ
   source?: string;         // 投稿ソース識別

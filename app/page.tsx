@@ -64,6 +64,7 @@ export default function AdMvpMockPage() {
             title: data.title ?? "",
             description: data.description ?? "",
             imageUrl: data.imageUrl ?? "",
+            hasImage: data.hasImage ?? !!data.imageUrl,
             externalUrl: data.externalUrl ?? "",
             tags: Array.isArray(data.tags) ? data.tags : [],
             adType: data.adType ?? "self",
@@ -189,8 +190,8 @@ function AdCard({
           className="block w-full object-cover"
         />
       ) : (
-        <div className="flex h-[150px] items-center justify-center bg-neutral-200 text-sm font-bold text-neutral-400">
-          NO IMAGE
+        <div className="flex h-[150px] items-center justify-center bg-neutral-200 text-xs font-medium text-neutral-400">
+          (No Image)
         </div>
       )}
 
@@ -252,8 +253,8 @@ function AdDetailModal({
               />
             </div>
           ) : (
-            <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-neutral-200 to-neutral-300 text-sm font-bold tracking-[0.18em] text-neutral-500">
-              NO IMAGE
+            <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-neutral-200 to-neutral-300 text-xs font-medium text-neutral-400">
+              (No Image)
             </div>
           )}
 

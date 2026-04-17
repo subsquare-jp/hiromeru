@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { signInWithRedirect, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useAuth } from './AuthProvider';
 
@@ -28,7 +28,7 @@ const AuthButtons = () => {
     setAuthError(null);
 
     try {
-      await signInWithRedirect(auth, provider);
+      await signInWithPopup(auth, provider);
     } catch (error) {
       const message = formatError(error);
       setAuthError(`Googleログインに失敗しました: ${message}`);
