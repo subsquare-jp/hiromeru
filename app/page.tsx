@@ -128,7 +128,7 @@ export default function AdMvpMockPage() {
           <p>18歳未満の方は、閲覧・投稿をしないでください。</p>
           <p>運営は、問題があると判断した投稿を非表示・停止・削除する場合があります。</p>
         </section>
-        <h1 className="mb-4 text-xl font-bold">広告一覧</h1>
+        <h1 className="mb-4 text-center text-xl font-bold">個人クリエイターの広告一覧</h1>
 
         {loading && (
           <p className="text-sm text-neutral-500">読み込み中...</p>
