@@ -8,6 +8,7 @@ import { useAuth } from '../AuthProvider';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import Link from 'next/link';
 
 export default function PostPage() {
     const { user, loading } = useAuth();
@@ -303,6 +304,14 @@ export default function PostPage() {
                 {errorMessage}
               </div>
             )}
+
+            <div className="mb-6 text-xs text-neutral-500">
+                投稿前に以下をご確認ください：
+                <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用条件</Link> / 
+                <Link href="/image_rule" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
+                <Link href="/18over" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label className="block text-sm font-semibold mb-2">タイトル (必須)</label>
