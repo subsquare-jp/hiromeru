@@ -107,6 +107,7 @@ export default function AdMvpMockPage() {
           <p className="mt-2 text-sm text-neutral-900">個人クリエイター広告サイト</p>
           <p className="mt-3 text-sm text-neutral-600">作品・活動・SNS・販売ページへのリンクを掲載できます</p>
           <p className="mt-4 text-sm">無料でテスト投稿できます（画像なしOK）</p>
+          <p className="mt-2 text-xs text-neutral-500">投稿する内容および画像について、必要な権利はご自身で確認してください。</p>
           <a
             href="/post"
             className="mt-4 inline-block rounded-lg bg-black px-4 py-2 text-sm font-bold text-white"
