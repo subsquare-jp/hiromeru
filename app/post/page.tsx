@@ -210,7 +210,7 @@ export default function PostPage() {
             <main className="max-w-2xl mx-auto p-8">
                 <div className="mb-6 text-xs text-neutral-500">
                     投稿前に以下をご確認ください：
-                    <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用条件</Link> / 
+                    <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用規約</Link> / 
                     <Link href="/image_rule" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
                     <Link href="/18over" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
                 </div>
@@ -299,7 +299,7 @@ export default function PostPage() {
 
             <div className="mb-6 text-xs text-neutral-500">
                 投稿前に以下をご確認ください：
-                <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用条件</Link> / 
+                <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用規約</Link> / 
                 <Link href="/image_rule" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
                 <Link href="/18over" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
             </div>

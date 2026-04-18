@@ -74,11 +74,6 @@ export default function KiyakuPage() {
         </section>
       </div>
 
-      <div className="mt-12 pt-6 border-t border-neutral-200">
-        <Link href="/post" className="text-blue-600 hover:underline">
-          ← 投稿ページに戻る
-        </Link>
-      </div>
     </main>
   );
 }
