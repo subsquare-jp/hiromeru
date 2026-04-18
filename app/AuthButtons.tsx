@@ -61,7 +61,7 @@ const AuthButtons = () => {
         <div className="flex flex-col items-end gap-1">
           <button
             onClick={handleSignIn}
-            className="rounded-lg bg-blue-500 px-5 py-3 text-base font-bold text-white shadow-md hover:bg-blue-600 transition-all active:scale-95"
+            className="rounded-lg bg-blue-500 px-3 py-1.5 text-sm sm:px-5 sm:py-3 sm:text-base font-bold text-white shadow-md hover:bg-blue-600 transition-all active:scale-95 whitespace-nowrap"
           >
             Googleログイン
           </button>
