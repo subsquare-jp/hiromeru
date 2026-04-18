@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function KiyakuPage() {
   return (
     <main className="max-w-2xl mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-6">利用条件</h1>
+      <h1 className="text-2xl font-bold mb-6">利用規約</h1>
       
       <div className="space-y-6 text-sm text-neutral-800 leading-relaxed">
         <p>
