@@ -210,9 +210,9 @@ export default function PostPage() {
             <main className="max-w-2xl mx-auto p-8">
                 <div className="mb-6 text-xs text-neutral-500">
                     投稿前に以下をご確認ください：
-                    <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用規約</Link> / 
-                    <Link href="/image_rule" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
-                    <Link href="/18over" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
+                    <Link href="/kiyaku" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline mx-1">利用規約</Link> / 
+                    <Link href="/image_rule" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
+                    <Link href="/18over" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
                 </div>
                 <h1 className="text-3xl font-bold mb-4">広告を投稿する</h1>
                 <div className="mb-8 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
@@ -299,9 +299,9 @@ export default function PostPage() {
 
             <div className="mb-6 text-xs text-neutral-500">
                 投稿前に以下をご確認ください：
-                <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用規約</Link> / 
-                <Link href="/image_rule" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
-                <Link href="/18over" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
+                <Link href="/kiyaku" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline mx-1">利用規約</Link> / 
+                <Link href="/image_rule" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
+                <Link href="/18over" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
