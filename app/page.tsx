@@ -103,17 +103,23 @@ export default function AdMvpMockPage() {
     <div className="min-h-screen bg-neutral-100">
       <main className="mx-auto max-w-xl p-4">
         <section className="mb-6 rounded-3xl border border-neutral-300 bg-white px-4 py-4 text-sm text-neutral-700">
-          <p className="text-lg font-bold text-black">ヒロメル</p>
-          <p className="mt-2 text-sm text-neutral-900">個人クリエイター広告サイト</p>
+          <div className="text-center">
+            <p className="text-lg font-bold text-black">ヒロメル</p>
+            <p className="mt-2 text-sm text-neutral-900">個人クリエイター広告サイト</p>
+          </div>
           <p className="mt-3 text-sm text-neutral-600">作品・活動・SNS・販売ページへのリンクを掲載できます</p>
-          <p className="mt-4 text-sm">無料でテスト投稿できます（画像なしOK）</p>
-          <p className="mt-2 text-xs text-neutral-500">投稿する内容および画像について、必要な権利はご自身で確認してください。</p>
-          <a
-            href="/post"
-            className="mt-4 inline-block rounded-lg bg-black px-4 py-2 text-sm font-bold text-white"
-          >
-            広告を投稿する
-          </a>
+          <p className="mt-3 text-sm">閲覧は無料で、どなたでもご覧いただけます。</p>
+          <p className="mt-3 text-sm">無料でテスト投稿できます（画像なしでもOK）</p>
+          <p className="mt-1 text-xs text-neutral-500">※2026年4月18日よりテスト運用中</p>
+          <p className="mt-3 text-sm">
+            投稿希望の方は、
+            <a href="https://x.com/hiromeru_jp" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">X</a>
+            または
+            <a href="https://www.instagram.com/hiromeru_jp/" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">Instagram</a>
+            からご連絡ください。
+          </p>
+          <p className="mt-1 text-xs text-neutral-500">（外部サービスが開きます）</p>
+          <p className="mt-3 text-xs text-neutral-500">投稿する内容および画像について、必要な権利はご自身で確認してください。</p>
         </section>
         <section className="mb-6 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
           <p className="font-bold">【注意】</p>
