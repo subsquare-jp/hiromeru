@@ -46,7 +46,7 @@ const AuthButtons = () => {
   if (loading) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50 text-right space-y-2">
+    <div className="flex items-center gap-2">
       {user ? (
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-700">{user.displayName}</span>
@@ -58,15 +58,15 @@ const AuthButtons = () => {
           </button>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="flex flex-col items-end gap-1">
           <button
             onClick={handleSignIn}
-            className="rounded-lg bg-blue-500 px-3 py-1 text-sm font-bold text-white hover:bg-blue-600"
+            className="rounded-lg bg-blue-500 px-5 py-3 text-base font-bold text-white shadow-md hover:bg-blue-600 transition-all active:scale-95"
           >
             Googleログイン
           </button>
           {authError && (
-            <div className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div className="rounded-2xl bg-red-50 px-4 py-2 text-xs text-red-700">
               {authError}
             </div>
           )}

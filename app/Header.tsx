@@ -1,0 +1,32 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import HomeButton from './HomeButton';
+import AuthButtons from './AuthButtons';
+
+export default function Header() {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200 shadow-sm">
+      <div className="mx-auto max-w-xl px-4 py-2 flex items-center justify-between gap-3">
+        <HomeButton />
+        
+        {isHomePage && (
+          <Link
+            href="/post"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-br from-orange-500 via-rose-500 to-purple-600 px-6 py-5 text-lg font-bold text-white shadow-lg shadow-rose-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] leading-tight text-center"
+          >
+            <span className="hidden sm:inline">✨</span>
+            <span className="whitespace-nowrap">無料テスト広告を投稿する</span>
+          </Link>
+        )}
+
+        <AuthButtons />
+      </div>
+    </header>
+  );
+}
