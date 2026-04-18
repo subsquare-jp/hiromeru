@@ -101,7 +101,7 @@ export default function AdMvpMockPage() {
   const rightColumnAds = ads.filter((_, index) => index % 2 === 0)
   const leftColumnAds = ads.filter((_, index) => index % 2 === 1)
   return (
-    <div className="min-h-screen bg-neutral-100 pt-24">
+    <div className="min-h-screen bg-neutral-100 pt-36">
       <main className="mx-auto max-w-xl p-4">
         <section className="mb-6 rounded-3xl border border-neutral-300 bg-white px-4 py-4 text-sm text-neutral-700">
           <div className="text-center">
