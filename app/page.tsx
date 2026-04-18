@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { Ad } from "@/types/ad";
+import Link from "next/link";
 
 type ClickLog = {
   adId: string;
@@ -121,6 +122,17 @@ export default function AdMvpMockPage() {
           <p className="mt-1 text-xs text-neutral-500">（外部サービスが開きます）</p>
           <p className="mt-3 text-xs text-neutral-500">投稿する内容および画像について、必要な権利はご自身で確認してください。</p>
         </section>
+
+        <div className="mb-6">
+          <Link
+            href="/post"
+            className="flex w-full items-center justify-center gap-2 rounded-3xl bg-gradient-to-br from-orange-500 via-rose-500 to-purple-600 px-6 py-5 text-lg font-bold text-white shadow-lg shadow-rose-500/20 transition-all hover:scale-[1.02] hover:shadow-rose-500/40 active:scale-[0.98]"
+          >
+            <span className="text-xl">✨</span>
+            広告を投稿する
+          </Link>
+        </div>
+
         <section className="mb-6 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
           <p className="font-bold">【注意】</p>
           <p>このサービスには、成人向け要素を含む投稿や外部リンクが含まれる場合があります。</p>
