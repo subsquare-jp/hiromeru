@@ -208,13 +208,12 @@ export default function PostPage() {
     if (!user) {
         return (
             <main className="max-w-2xl mx-auto p-8">
-                <section className="mb-6 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
-                    <p className="font-bold">【注意】</p>
-                    <p>このサービスには、成人向け要素を含む投稿や外部リンクが含まれる場合があります。</p>
-                    <p>これは注意表示であり、年齢認証ではありません。</p>
-                    <p>18歳未満の方は、閲覧・投稿をしないでください。</p>
-                    <p>運営は、問題があると判断した投稿を非表示・停止・削除する場合があります。</p>
-                </section>
+                <div className="mb-6 text-xs text-neutral-500">
+                    投稿前に以下をご確認ください：
+                    <Link href="/kiyaku" className="text-blue-500 hover:underline mx-1">利用条件</Link> / 
+                    <Link href="/image_rule" className="text-blue-500 hover:underline mx-1">画像投稿ルール</Link> / 
+                    <Link href="/18over" className="text-blue-500 hover:underline mx-1">18禁注意</Link>
+                </div>
                 <h1 className="text-3xl font-bold mb-4">広告を投稿する</h1>
                 <div className="mb-8 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
                     <p className="mb-2 font-bold">ログインが必要です</p>
@@ -278,13 +277,6 @@ export default function PostPage() {
 
     return (
         <main className="max-w-2xl mx-auto p-8">
-            <section className="mb-6 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
-                <p className="font-bold">【注意】</p>
-                <p>このサービスには、成人向け要素を含む投稿や外部リンクが含まれる場合があります。</p>
-                <p>これは注意表示であり、年齢認証ではありません。</p>
-                <p>18歳未満の方は、閲覧・投稿をしないでください。</p>
-                <p>運営は、問題があると判断した投稿を非表示・停止・削除する場合があります。</p>
-            </section>
             <h1 className="text-3xl font-bold mb-4">広告を投稿する</h1>
             <div className="mb-8 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
               <p className="mb-2 font-bold">画像なしのテスト投稿も歓迎しています</p>
