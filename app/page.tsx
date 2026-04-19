@@ -107,18 +107,18 @@ export default function AdMvpMockPage() {
           <div className="text-center">
             <p className="text-lg font-bold text-black">ヒロメル</p>
             <p className="mt-2 text-sm font-medium text-neutral-900">個人クリエイター向け広告掲載サービス</p>
-            
+
             <p className="mt-6 leading-relaxed">
               作品・活動を外部ユーザーへ届けるための<br />
               「発見の入口」です。
             </p>
-            
+
             <p className="mt-6 leading-relaxed">
-              現在はβ期間中のため、<br />
+              現在はテスト掲載期間中のため、<br />
               <strong>先行テスト掲載招待（基本招待制）</strong>として運用しています。<br />
               掲載費は無料です。
             </p>
-            
+
             <p className="mt-6">
               参加をご希望の方は、
               <a href="https://x.com/hiromeru_jp" className="text-blue-600 underline mx-1" target="_blank" rel="noopener noreferrer">X</a>
