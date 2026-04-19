@@ -126,6 +126,9 @@ export default function AdMvpMockPage() {
               <a href="https://www.instagram.com/hiromeru_jp/" className="text-blue-600 underline mx-1" target="_blank" rel="noopener noreferrer">Instagram</a>
               よりご連絡ください。
             </p>
+            <p className="mt-6 text-[10px] text-neutral-500">
+              ※テスト期間終了後は有料化（β価格→本版価格）を予定しています
+            </p>
           </div>
         </section>
 
