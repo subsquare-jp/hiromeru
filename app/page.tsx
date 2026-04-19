@@ -103,24 +103,30 @@ export default function AdMvpMockPage() {
   return (
     <div className="min-h-screen bg-neutral-100 pt-36">
       <main className="mx-auto max-w-xl p-4">
-        <section className="mb-6 rounded-3xl border border-neutral-300 bg-white px-4 py-4 text-sm text-neutral-700">
+        <section className="mb-6 rounded-3xl border border-neutral-300 bg-white px-4 py-8 text-sm text-neutral-700">
           <div className="text-center">
             <p className="text-lg font-bold text-black">ヒロメル</p>
-            <p className="mt-2 text-sm text-neutral-900">個人クリエイター広告サイト</p>
+            <p className="mt-2 text-sm font-medium text-neutral-900">個人クリエイター向け広告掲載サービス</p>
+            
+            <p className="mt-6 leading-relaxed">
+              作品・活動を外部ユーザーへ届けるための<br />
+              「発見の入口」です。
+            </p>
+            
+            <p className="mt-6 leading-relaxed">
+              現在はβ期間中のため、<br />
+              <strong>先行テスト掲載招待（基本招待制）</strong>として運用しています。<br />
+              掲載費は無料です。
+            </p>
+            
+            <p className="mt-6">
+              参加をご希望の方は、
+              <a href="https://x.com/hiromeru_jp" className="text-blue-600 underline mx-1" target="_blank" rel="noopener noreferrer">X</a>
+              または
+              <a href="https://www.instagram.com/hiromeru_jp/" className="text-blue-600 underline mx-1" target="_blank" rel="noopener noreferrer">Instagram</a>
+              よりご連絡ください。
+            </p>
           </div>
-          <p className="mt-3 text-sm text-neutral-600">作品・活動・SNS・販売ページへのリンクを掲載できます</p>
-          <p className="mt-3 text-sm">閲覧は無料で、どなたでもご覧いただけます。</p>
-          <p className="mt-3 text-sm">無料でテスト投稿できます（画像なしでもOK）</p>
-          <p className="mt-1 text-xs text-neutral-500">※2026年4月18日よりテスト運用中</p>
-          <p className="mt-3 text-sm">
-            投稿希望の方は、
-            <a href="https://x.com/hiromeru_jp" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">X</a>
-            または
-            <a href="https://www.instagram.com/hiromeru_jp/" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">Instagram</a>
-            からご連絡ください。
-          </p>
-          <p className="mt-1 text-xs text-neutral-500">（外部サービスが開きます）</p>
-          <p className="mt-3 text-xs text-neutral-500">投稿する内容および画像について、必要な権利はご自身で確認してください。</p>
         </section>
 
         <section className="mb-6 rounded-3xl border border-neutral-300 bg-white p-5 text-sm text-neutral-700">
