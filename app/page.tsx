@@ -112,6 +112,9 @@ export default function AdMvpMockPage() {
               作品・活動を外部ユーザーへ届けるための<br />
               「発見の入口」です。
             </p>
+            <p className="mt-2 text-[12px] font-medium text-neutral-600">
+              👉 掲載された広告から、SNSや販売ページへユーザーが遷移できます。
+            </p>
 
             <p className="mt-6 leading-relaxed">
               現在はテスト掲載期間中のため、<br />
