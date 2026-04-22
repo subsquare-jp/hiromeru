@@ -2,7 +2,6 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth, browserLocalPersistence, setPersistence } from "firebase/auth";
-import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
@@ -18,15 +17,6 @@ const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
-
-// アナリティクスの初期化（クライアント側でのみ実行可能）
-export const initAnalytics = async (): Promise<Analytics | null> => {
-  const supported = await isSupported();
-  if (supported) {
-    return getAnalytics(app);
-  }
-  return null;
-};
 
 // 明示的に localStorage 永続化を設定（redirect ログイン後に必要）
 if (typeof window !== 'undefined') {
