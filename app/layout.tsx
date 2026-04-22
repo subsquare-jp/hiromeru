@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "./AuthProvider";
 import Header from "./Header";
+import FirebaseAnalytics from "./FirebaseAnalytics";
 
 export const metadata: Metadata = {
   title: "Ad Mock Page",
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
+        <FirebaseAnalytics />
         <AuthProvider>
           <Header />
           {children}
