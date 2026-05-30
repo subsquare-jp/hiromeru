@@ -27,7 +27,7 @@ export default function Header() {
               className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-br from-orange-500 via-rose-500 to-purple-600 px-4 py-2.5 sm:px-6 sm:py-4 text-base sm:text-lg font-bold text-white shadow-lg shadow-rose-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] leading-tight text-center"
             >
               <span>✨</span>
-              <span className="whitespace-nowrap">先行テスト掲載に参加する</span>
+              <span className="whitespace-nowrap">先行テスト掲載に参加する（無料）</span>
             </Link>
           </div>
         )}
