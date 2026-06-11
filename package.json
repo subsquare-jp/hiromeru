@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "node scripts/verify-external-link-safety.mjs",
     "start": "next start"
   },
   "keywords": [],
