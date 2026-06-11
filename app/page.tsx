@@ -230,9 +230,21 @@ function AdDetailModal({
   ad: Ad | null;
   onClose: () => void;
 }) {
+  const [isExternalLinkConfirmOpen, setIsExternalLinkConfirmOpen] =
+    React.useState(false);
+  const externalLinkConfirmId = "external-link-confirm";
+  const externalLinkOpenLinkRef = React.useRef<HTMLAnchorElement>(null);
+
   React.useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key !== "Escape") return;
+
+      if (isExternalLinkConfirmOpen) {
+        setIsExternalLinkConfirmOpen(false);
+        return;
+      }
+
+      onClose();
     };
 
     if (ad) {
@@ -240,7 +252,17 @@ function AdDetailModal({
     }
 
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [ad, onClose]);
+  }, [ad, isExternalLinkConfirmOpen, onClose]);
+
+  React.useEffect(() => {
+    setIsExternalLinkConfirmOpen(false);
+  }, [ad?.id]);
+
+  React.useEffect(() => {
+    if (isExternalLinkConfirmOpen) {
+      externalLinkOpenLinkRef.current?.focus();
+    }
+  }, [isExternalLinkConfirmOpen]);
 
   if (!ad) return null;
 
@@ -303,17 +325,51 @@ function AdDetailModal({
             </div>
 
             <div className="mt-5">
-              <a
-                href={ad.externalUrl}
-                target="_blank"
-                rel="noreferrer noopener"
+              <button
+                type="button"
+                aria-expanded={isExternalLinkConfirmOpen}
+                aria-controls={externalLinkConfirmId}
                 onClick={() => {
-                  void saveClickLog(ad);
+                  setIsExternalLinkConfirmOpen(true);
                 }}
                 className="block w-full rounded-xl bg-neutral-950 px-4 py-4 text-center text-sm font-bold text-white"
               >
                 外部リンクを見る
-              </a>
+              </button>
+              {isExternalLinkConfirmOpen && (
+                <div
+                  id={externalLinkConfirmId}
+                  className="mt-3 rounded-xl border border-neutral-200 bg-neutral-50 p-3"
+                >
+                  <p className="text-sm font-bold text-neutral-900">
+                    外部サイトへ移動します
+                  </p>
+                  <p className="mt-1 break-all text-xs leading-relaxed text-neutral-600">
+                    {ad.externalUrl}
+                  </p>
+                  <div className="mt-3 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsExternalLinkConfirmOpen(false)}
+                      className="flex-1 rounded-lg border border-neutral-300 bg-white px-3 py-3 text-sm font-bold text-neutral-700"
+                    >
+                      キャンセル
+                    </button>
+                    <a
+                      ref={externalLinkOpenLinkRef}
+                      href={ad.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        void saveClickLog(ad);
+                      }}
+                      className="flex-1 rounded-lg bg-neutral-950 px-3 py-3 text-center text-sm font-bold text-white"
+                    >
+                      開く
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
